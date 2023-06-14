@@ -1,19 +1,15 @@
+url = "https://www.epa.gov/asbestos/learn-about-asbestos#asbestos"
+url2 = "https://www.britannica.com/science/water-pollution"
+
 from bs4 import BeautifulSoup
 import requests
 
 
 
-urls = [ "https://www.epa.gov/p2/learn-about-pollution-prevention",
- "https://www.epa.gov/p2/pollution-prevention-law-and-policies",
- "https://www.energy.gov/eere/why-clean-energy-matters",
- "https://www.epa.gov/climatechange-science/basics-climate-change",
- "https://www.epa.gov/watersense/watersense-labeled-homes",
- "https://www.epa.gov/watersense/about-watersense",
- "https://www.greenpeace.org/usa/oceans/preventing-plastic-pollution/",
- "https://kids.nationalgeographic.com/science/article/pollution",
- "https://www.nrdc.org/stories/air-pollution-everything-you-need-know#whatis",
- "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health",
- "https://www.agrivi.com/blog/environmental-pollution/",]
+urls = [ url]
+
+
+
 
 
 # response = requests.get(url11)
@@ -63,4 +59,5 @@ df = pd.DataFrame({
     "Col3" : col3,
 })
 
-csv_file = df.to_csv("multiple_url_data.csv",header=False,index=False)
+print(df)
+# csv_file = df.to_csv("multiple_url_data.csv",header=False,index=False)
