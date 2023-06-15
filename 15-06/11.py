@@ -1,10 +1,13 @@
 
 
+
+
 from bs4 import BeautifulSoup
 import requests
 
 
-url = "https://www.nrdc.org/stories/ocean-pollution-dirty-facts"
+url = "https://www.nrdc.org/stories/ocean-acidification-what-you-need-know"
+# url = "https://www.nrdc.org/stories/ocean-pollution-dirty-facts"
 
 urls = [url]
 
@@ -25,9 +28,9 @@ try:
     for i in range(len(urls)):
         site = requests.get(urls[i])
         soup = BeautifulSoup(site.content,"html.parser")
+        h1_tag = soup.find("h1")
 
         soup1 = soup.find("article")
-        h1_tag = soup1.find("h1")
         for tag in soup1.find_all(["h2"]):
             if tag.text == "Discover.":
                 break
@@ -68,6 +71,7 @@ except:
     col1.append("-")
     col2.append("-")
     col3.append("-")
+    col4.append("-")
 
 print("Final Lenght-->",len(col1),len(col2),len(col3),len(col4))
 
@@ -82,4 +86,4 @@ df = pd.DataFrame({
 
 print(df)
 # csv_file = df.to_csv("multiple_url_data_text.csv",header=False,index=False)
-df.to_csv("15_06.csv",mode="a",header=False,index=False)
+# df.to_csv("15_06.csv",mode="a",header=False,index=False)
