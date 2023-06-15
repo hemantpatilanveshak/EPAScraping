@@ -77,7 +77,7 @@ print(p)
 print("*****************")
 print(len(col1),len(col2),len(col3),len(col4))
 
-print(col3)
+# print(col3)
 
 # df = pd.DataFrame({
 #     "col1":col1,
