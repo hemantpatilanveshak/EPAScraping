@@ -12,8 +12,8 @@ url8 = "https://kids.nationalgeographic.com/science/article/pollution"
 url9 = "https://www.nrdc.org/stories/air-pollution-everything-you-need-know#whatis"
 url10 = "https://www.who.int/news-room/fact-sheets/detail/ambient-(outdoor)-air-quality-and-health"
 url11 = "https://www.agrivi.com/blog/environmental-pollution/"
-
-response = requests.get(url11)
+url12  = "https://www.epa.gov/p2/learn-about-pollution-prevention"
+response = requests.get(url9)
 
 soup = BeautifulSoup(response.content,"html.parser")
 col1 = []
@@ -40,9 +40,18 @@ for tag in soup.find_all(["h3"]):
         print(tag.text.strip(),"-->",p.text.strip())
         col1.append(tag.text.strip())
         col2.append(p.text.strip())
-        col3.append(url11)
+        # col3.append(url11)
 
-print(len(col1),len(col2),len(col3))
+print(len(col1),len(col2))
+
+
+import pandas as pd
+
+df = pd.DataFrame({
+    "Col1" : col1,
+    "Col2" : col2,
+})
+
 
 
 

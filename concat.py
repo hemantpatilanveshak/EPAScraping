@@ -28,10 +28,18 @@ col4 = []
 csv_files = ['test.csv','soli_pollution.csv']
 
 df_csv_append = pd.DataFrame()
-
+df_list = []
 for file in csv_files:
-    df = pd.read_csv(file)
-    df.to_csv("concat.csv",mode="a",header=False,index=False)
+    # df = pd.read_csv(file,header=None)
+    # df.to_csv("concat.csv",mode="a",header=False,index=False)
+    # df_list.append(df)
+    # df_csv_append = pd.concat(,ignore_index=True, axis=0)
+    df = pd.read_csv(file,header=None)
+    df_list.append(df)
+    df = None
 
-
+df_csv_append = pd.concat(df_list,ignore_index=True,axis=0)
+# print(df_list)
 # print(df_csv_append)
+print(df_csv_append)
+df_csv_append.to_csv("concat.csv",header=False,index=False)

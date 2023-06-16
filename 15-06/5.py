@@ -82,4 +82,4 @@ df = pd.DataFrame({
 print(df)
 # csv_file = df.to_csv("multiple_url_data_text.csv",header=False,index=False)
 
-df.to_csv("15_06.csv",mode="a",header=False,index=False)
+# df.to_csv("15_06.csv",mode="a",header=False,index=False)

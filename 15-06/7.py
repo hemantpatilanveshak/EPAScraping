@@ -74,14 +74,14 @@ print("Final Lenght-->",len(col1),len(col2),len(col3),len(col4))
 import pandas as pd
 
 df = pd.DataFrame({
-    "Col1" : col1,
-    "Col2" : col2,
-    "Col3" : col3,
-    "Col4" : col4
+    "title" : col1,
+    "subtitle" : col2,
+    "description" : col3,
+    
 })
 
 print(df)
 # csv_file = df.to_csv("multiple_url_data_text.csv",header=False,index=False)
 
 
-df.to_csv("15_06.csv",mode="a",header=False,index=False)
+# df.to_csv("15_06.csv",mode="a",header=False,index=False)

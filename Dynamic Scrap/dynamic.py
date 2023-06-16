@@ -1,46 +1,24 @@
-
-
-
-
 from bs4 import BeautifulSoup
 import requests
+import pandas as pd
 
-
-# url = "https://www.nrdc.org/stories/ocean-acidification-what-you-need-know"
-url = "https://www.niehs.nih.gov/health/topics/agents/indoor-air/index.cfm"
-# url = "https://www.epa.gov/acidrain/what-acid-rain"
-# url = "https://www.epa.gov/greenvehicles/learn-about-green-vehicles"
-# url ="https://populationmatters.org/climate-change/"
-# url = "https://www.nrdc.org/stories/ocean-pollution-dirty-facts"
-# url = "https://world-nuclear.org/information-library/nuclear-fuel-cycle/nuclear-wastes/radioactive-waste-management.aspx"
-# url = "https://www.nrc.gov/reading-rm/doc-collections/fact-sheets/radwaste.html"
-url = "https://www.lung.org/clean-air/outdoors/air-quality-index"
-
-urls = [url]
-
-
-
-
-
-# response = requests.get(url11)
-
-# soup = BeautifulSoup(response.content,"html.parser")
-
-
-col1 = []
-col2 = []
-col3 = []
-col4 = []
-
-
-try:
-    for i in range(len(urls)):
-        site = requests.get(urls[i])
+def scrapper(url,file_name):
+    try:
+        col1 = []
+        col2 = []
+        col3 = []
+        try:        
+            site = requests.get(url)
+        except:
+            print("Site Not Found")
+            
+            
         soup = BeautifulSoup(site.content,"html.parser")
-        # soup2 = soup.find("div", class_="ArticleContent")
-        # print("********",soup2)
+        
         if soup.find("article") is not None:
-            soup1 = soup.find("article")
+            test = soup.find_all("article")
+            # soup1 = soup.find("article")
+            soup1 = test[0]
             h1_tag = soup.find("h1")
         elif soup.find("div", class_="ArticleContent") is not None:
             soup1 = soup.find("div", class_="ArticleContent")
@@ -62,6 +40,8 @@ try:
             for p in p_tag:
                 if p.name == "h2" or p.name == "h3" or p.name == "h4":
                     break
+                elif tag.text.strip() == "Select Your Location":
+                    break
                 print(tag.text.strip(),"-->",p.text.strip())
                 col1.append(h1_tag.text.strip())
                 col2.append(tag.text.strip())
@@ -72,6 +52,8 @@ try:
             p_tag = tag.find_next_siblings()
             for p in p_tag:
                 if p.name == "h2" or p.name == "h3" or p.name == "h4":
+                    break
+                elif tag.text.strip() == "Select Your Location":
                     break
                 print(tag.text.strip(),"-->",p.text.strip())
                 col1.append(h1_tag.text.strip())
@@ -84,29 +66,47 @@ try:
             for p in p_tag:
                 if p.name == "h2" or p.name == "h3" or p.name == "h4":
                     break
+                elif tag.text.strip() == "Select Your Location":
+                    break
                 print(tag.text.strip(),"-->",p.text.strip())
                 col1.append(h1_tag.text.strip())
                 col2.append(tag.text.strip())
                 col3.append(p.text.strip())
-                
 
-        print(len(col1),len(col2),len(col3))
-except:
-    col1.append("-")
-    col2.append("-")
-    col3.append("-")
-    col4.append("-")
+        
+        if test[1].find("h2") is None:
+            p_tags = soup1.find_all("p")
+            for p in p_tags:
+                col1.append(h1_tag.text.strip())
+                col2.append("-")
+                col3.append(p.text.strip())
 
-print("Final Lenght-->",len(col1),len(col2),len(col3),len(col4))
 
-import pandas as pd
 
-df = pd.DataFrame({
-    "title" : col1,
-    "subtitle" : col2,
-    "description" : col3,
-})
+                    
 
-print(df)
-# csv_file = df.to_csv("multiple_url_data_text.csv",header=False,index=False)
-# df.to_csv("15_06.csv",mode="a",header=False,index=False)
+        # print(len(col1),len(col2),len(col3))
+    except:
+        col1.append("-")
+        col2.append("-")
+        col3.append("-")
+
+    try:
+        df = pd.DataFrame({
+             "title" : col1,
+             "sub_title" : col2,
+            "description" : col3,
+                })
+    except:
+        print("Error in data frame")
+
+    name = f"{file_name}.csv"
+    df.to_csv(name)
+
+    return name
+
+
+url = input("Enter Url: ")
+file_name = input("Enter a file name to save file: ")
+output = scrapper(url,file_name)
+print(output)
